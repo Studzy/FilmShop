@@ -34,7 +34,7 @@ namespace FilmLibrary
         #endregion
 
         #region AddFilm
-        public static void AddFilm(Films films)
+        public static void AddPersonnes(Films films)
         {
             try
             {
@@ -44,12 +44,12 @@ namespace FilmLibrary
                     MySqlCommand insertCommand = new MySqlCommand();
                     insertCommand.Connection = db;
                     insertCommand.CommandText = ("INSERT INTO film (titre_film, realisateur_film, date_sortie_film, resume_film, genre_film, duree_film) VALUES (@titre, @realisateur, @dateSortie, @resume, @genre, @duree)");
-                    insertCommand.Parameters.AddWithValue("@Nom_Produit", films.TitreFilm);
-                    insertCommand.Parameters.AddWithValue("@TVA", films.RealisateurFilm);
-                    insertCommand.Parameters.AddWithValue("@Prix_Produit", films.DateSortieFilm);
-                    insertCommand.Parameters.AddWithValue("@Remise_Produit", films.ResumeFilm);
-                    insertCommand.Parameters.AddWithValue("@Description_Produit", films.GenreFilm);
-                    insertCommand.Parameters.AddWithValue("@ValNutrition_Produit", films.DureeFilm);
+                    insertCommand.Parameters.AddWithValue("@titre", films.TitreFilm);
+                    insertCommand.Parameters.AddWithValue("@realisateur", films.RealisateurFilm);
+                    insertCommand.Parameters.AddWithValue("@dateSortie", films.DateSortieFilm);
+                    insertCommand.Parameters.AddWithValue("@resume", films.ResumeFilm);
+                    insertCommand.Parameters.AddWithValue("@genre", films.GenreFilm);
+                    insertCommand.Parameters.AddWithValue("@duree", films.DureeFilm);
                     insertCommand.ExecuteReader();
                 }
             }
@@ -130,6 +130,7 @@ namespace FilmLibrary
         }
         #endregion
 
+        #region GetAllPersonnes
         public static List<Personnes> GetAllPersonnes()
         {
             List<Personnes> entries = new List<Personnes>();
@@ -181,5 +182,184 @@ namespace FilmLibrary
             }
             return entries;
         }
+        #endregion
+
+        #region GetFilmByGenre
+
+        public static List<Films> GetFilmByGenre(string Genre)
+        {
+            List<Films> entries = new List<Films>();
+            try
+            {
+                using (MySqlConnection db =
+                new MySqlConnection(CHEMINBDD))
+                {
+                    db.Open();
+                    MySqlCommand insertCommand = new MySqlCommand();
+                    insertCommand.Connection = db;
+                    insertCommand.CommandText = "SELECT * FROM film WHERE genre_film = @genre";
+                    insertCommand.Parameters.AddWithValue("@genre", Genre);
+                    MySqlDataReader query = insertCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        Films films = new Films();
+                        films.IdFilm = query.GetInt32(0);
+                        films.TitreFilm = query.GetString(1);
+                        films.RealisateurFilm = query.GetString(2);
+                        films.DateSortieFilm = query.GetDateTime(3);
+                        films.ResumeFilm = query.GetString(4);
+                        films.GenreFilm = query.GetString(5);
+                        films.DureeFilm = query.GetInt32(6);
+                        entries.Add(films);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+            }
+            return entries;
+        }
+        #endregion
+
+        #region GetFilmByYear
+
+        public static List<Films> GetFilmByYear(DateTime date)
+        {
+            string Year = Convert.ToString(date.Year);
+            string test = "\'"+ Year + "%\'";
+            List<Films> entries = new List<Films>();
+            try
+            {
+                using (MySqlConnection db =
+                new MySqlConnection(CHEMINBDD))
+                {
+                    db.Open();
+                    MySqlCommand insertCommand = new MySqlCommand();
+                    insertCommand.Connection = db;
+                    insertCommand.CommandText = "SELECT * FROM film WHERE date_sortie_film LIKE @test";
+                    insertCommand.Parameters.AddWithValue("@test", test);
+                    MySqlDataReader query = insertCommand.ExecuteReader();
+
+                    while (query.Read())
+                    {
+                        Films films = new Films();
+                        films.IdFilm = query.GetInt32(0);
+                        films.TitreFilm = query.GetString(1);
+                        films.RealisateurFilm = query.GetString(2);
+                        films.DateSortieFilm = query.GetDateTime(3);
+                        films.ResumeFilm = query.GetString(4);
+                        films.GenreFilm = query.GetString(5);
+                        films.DureeFilm = query.GetInt32(6);
+                        entries.Add(films);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+            }
+            return entries;
+        }
+        #endregion
+
+        public static Films GetFilmById(int id)
+        {
+            Films films = new Films();
+            try
+            {
+                using (MySqlConnection db =
+                new MySqlConnection(CHEMINBDD))
+                {
+                    db.Open();
+                    MySqlCommand insertCommand = new MySqlCommand();
+                    insertCommand.Connection = db;
+                    insertCommand.CommandText = "SELECT * FROM film WHERE id_film = @id";
+                    insertCommand.Parameters.AddWithValue("@id", id);
+                    MySqlDataReader query = insertCommand.ExecuteReader();
+
+                    if (query.Read())
+                    {
+                        
+                        films.IdFilm = query.GetInt32(0);
+                        films.TitreFilm = query.GetString(1);
+                        films.RealisateurFilm = query.GetString(2);
+                        films.DateSortieFilm = query.GetDateTime(3);
+                        films.ResumeFilm = query.GetString(4);
+                        films.GenreFilm = query.GetString(5);
+                        films.DureeFilm = query.GetInt32(6);
+                    }
+                    else
+                    {
+                        films.TitreFilm = "Rien";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+            }
+            return films;
+        }
+
+        public static Personnes GetPersonneById(int id)
+        {
+            Personnes personne = new Personnes();
+            try
+            {
+                using (MySqlConnection db =
+                new MySqlConnection(CHEMINBDD))
+                {
+                    db.Open();
+                    MySqlCommand insertCommand = new MySqlCommand();
+                    insertCommand.Connection = db;
+                    insertCommand.CommandText = "SELECT * FROM personne WHERE id_personne = @id";
+                    insertCommand.Parameters.AddWithValue("@id", id);
+                    MySqlDataReader query = insertCommand.ExecuteReader();
+
+                    if (query.Read())
+                    {
+                        personne.IdPersonne = query.GetInt32(0);
+                        personne.NomPersonne = query.GetString(1);
+                        personne.PrenomPersonne = query.GetString(2);
+                        personne.DateNaissancePersonne = query.GetDateTime(3);
+                        personne.AdressePersonne = query.GetString(4);
+                        personne.VillePersonne = query.GetString(5);
+                        personne.CodePostal = query.GetString(6);
+                        if (!DBNull.Value.Equals(query.GetValue(7)))
+                        {
+                            personne.TaillePersonne = query.GetInt32(7);
+                        }
+                        else
+                        {
+                            personne.TaillePersonne = 0;
+                        }
+                        if (!DBNull.Value.Equals(query.GetValue(8)))
+                        {
+                            personne.PoidPersonne = query.GetInt32(8);
+                        }
+                        else
+                        {
+                            personne.PoidPersonne = 0;
+                        }
+                    }
+                    else
+                    {
+                        personne.NomPersonne = "Rien";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+            }
+            return personne;
+        }
+
     }
 }
