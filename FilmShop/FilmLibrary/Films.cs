@@ -29,6 +29,17 @@ namespace FilmLibrary
             DureeFilm = dureeFilm;
         }
 
+        public Films(int idFilm, string titreFilm, string realisateurFilm, DateTime dateSortieFilm, string resumeFilm, string genreFilm, int dureeFilm)
+        {
+            IdFilm = idFilm;
+            TitreFilm = titreFilm;
+            RealisateurFilm = realisateurFilm;
+            DateSortieFilm = dateSortieFilm;
+            ResumeFilm = resumeFilm;
+            GenreFilm = genreFilm;
+            DureeFilm = dureeFilm;
+        }
+
         public int IdFilm { get => idFilm; set => idFilm = value; }
         public string TitreFilm { get => titreFilm; set => titreFilm = value; }
         public string RealisateurFilm { get => realisateurFilm; set => realisateurFilm = value; }
