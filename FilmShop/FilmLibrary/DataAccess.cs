@@ -93,7 +93,7 @@ namespace FilmLibrary
         #endregion
 
         #region GetAllfilms
-        public static List<Films> GetAllFilms()
+        public static List<Films> GetAllFilm()
         {
             List<Films> entries = new List<Films>();
             try
@@ -266,6 +266,7 @@ namespace FilmLibrary
         }
         #endregion
 
+        #region GetFilmById
         public static Films GetFilmById(int id)
         {
             Films films = new Films();
@@ -305,7 +306,9 @@ namespace FilmLibrary
             }
             return films;
         }
+        #endregion
 
+        #region GetPersonneById
         public static Personnes GetPersonneById(int id)
         {
             Personnes personne = new Personnes();
@@ -360,6 +363,7 @@ namespace FilmLibrary
             }
             return personne;
         }
+        #endregion
 
     }
 }

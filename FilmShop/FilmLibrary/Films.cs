@@ -13,7 +13,7 @@ namespace FilmLibrary
         private string resumeFilm;
         private string genreFilm;
         private int dureeFilm;
-        private List<string> listeActeurs;
+        private List<string> listeActeurs = new List<string>();
 
         public Films()
         {

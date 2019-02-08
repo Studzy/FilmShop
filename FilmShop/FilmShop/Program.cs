@@ -11,13 +11,31 @@ namespace FilmShop
     {
         static void Main(string[] args)
         {
-            AddFilm();
+
         }
+
+        #region Affiche film by id
+        public static void AfficheFilmById(int id)
+        {
+            Films film = new Films();
+            film = DataAccess.GetFilmById(id);
+            Console.WriteLine("ID = " + film.IdFilm + "\n Titre = " + film.TitreFilm + "\n Realisateur = " + film.RealisateurFilm + "\n Date sortie = " + film.DateSortieFilm + "\n Resume = " + film.ResumeFilm + "\n Genre = " + film.GenreFilm + "\n Durée = " + film.DureeFilm + "\n\n");
+        }
+        #endregion
+
+        #region Affiche les personne by id
+        public static void AffichePersonneById(int id)
+        {
+            Personnes personne = new Personnes();
+            personne = DataAccess.GetPersonneById(id);
+            Console.WriteLine("ID = " + personne.IdPersonne + "\n Nom = " + personne.NomPersonne + "\n Prenom = " + personne.PrenomPersonne + "\n Date de naissance = " + personne.DateNaissancePersonne + "\n Adresse = " + personne.AdressePersonne + "\n ville = " + personne.VillePersonne + "\n Code Postal = " + personne.CodePostal + "\n Taille = " + personne.TaillePersonne + "\n Poids = " + personne.PoidPersonne + "\n\n");
+        }
+        #endregion
 
         #region Affiche les films
         public static void AfficheLesFilms()
         {
-            List<Films> films = DataAccess.GetAllFilms();
+            List<Films> films = DataAccess.GetAllFilm();
             Console.WriteLine("Nous avons {0} film(s) :", films.Count);
             foreach (var film in films)
             {
@@ -38,14 +56,10 @@ namespace FilmShop
         }
         #endregion
 
-
-
         #region Add film
         public static void AddFilm()
         {
             Films films = new Films();
-            Console.Write("Titre : ");
-            films.TitreFilm = Console.ReadLine();
             Console.Write("Realisateur : ");
             films.RealisateurFilm = Console.ReadLine();
             Console.Write("Date sortie (YYYY/MM/DD): ");
@@ -57,7 +71,6 @@ namespace FilmShop
             films.GenreFilm = Console.ReadLine();
             Console.Write("Durée : ");
             films.DureeFilm = Convert.ToInt32(Console.ReadLine());
-
             DataAccess.AddPersonnes(films);
         }
         #endregion

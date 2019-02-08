@@ -43,13 +43,87 @@ namespace FilmLibrary
             PoidPersonne = poidPersonne;
         }
 
-        public int IdPersonne { get => idPersonne; set => idPersonne = value; }
-        public string NomPersonne { get => nomPersonne; set => nomPersonne = value; }
-        public string PrenomPersonne { get => prenomPersonne; set => prenomPersonne = value; }
+        public int IdPersonne
+        {
+            get => idPersonne;
+            set => idPersonne = value;
+        }
+        public string NomPersonne
+        {
+            get => nomPersonne;
+            set
+            {
+                if (value.Length < 1 || value.Length > 255)
+                {
+                    throw new ArgumentException("ERREUR: Le nom n'est pas valide");
+                }
+                else
+                {
+                    nomPersonne = value;
+                }
+            }
+        }
+        public string PrenomPersonne
+        {
+            get => prenomPersonne;
+            set
+            {
+                if (value.Length < 1 || value.Length > 255)
+                {
+                    throw new ArgumentException("ERREUR: Le prenom n'est pas valide");
+                }
+                else
+                {
+                    prenomPersonne = value;
+                }
+            }
+        }
         public DateTime DateNaissancePersonne { get => dateNaissancePersonne; set => dateNaissancePersonne = value; }
-        public string AdressePersonne { get => adressePersonne; set => adressePersonne = value; }
-        public string VillePersonne { get => villePersonne; set => villePersonne = value; }
-        public string CodePostal { get => codePostal; set => codePostal = value; }
+        public string AdressePersonne
+        {
+            get => adressePersonne;
+            set
+            {
+                if (value.Length < 1 || value.Length > 255)
+                {
+                    throw new ArgumentException("ERREUR: L'adresse n'est pas valide");
+                }
+                else
+                {
+                    nomPersonne = value;
+                }
+            }
+        }
+        public string VillePersonne
+        {
+            get => villePersonne;
+            set
+            {
+                if (value.Length < 1 || value.Length > 255)
+                {
+                    throw new ArgumentException("ERREUR: Le nom de la ville n'est pas valide");
+                }
+                else
+                {
+                    villePersonne = value;
+                }
+            }
+        }
+        public string CodePostal
+        {
+            get => codePostal;
+            set
+            {
+                if (value.Length < 1 || value.Length > 5)
+                {
+                    throw new ArgumentException("ERREUR: Le code postal de la ville n'est pas valide");
+                }
+                else
+                {
+                    codePostal = value;
+                }
+            }
+        }
         public int TaillePersonne { get => taillePersonne; set => taillePersonne = value; }
         public int PoidPersonne { get => poidPersonne; set => poidPersonne = value; }
 
