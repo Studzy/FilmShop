@@ -22,7 +22,7 @@ namespace FilmLibrary
                 return resultat;
             }
 
-            catch (Exception e)
+            catch (Exception)
             {
                 return resultat;
             }
